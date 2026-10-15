@@ -8,15 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		6EE951AEED3B87C639F4DDA3 /* Pods_CSHDFIRSTGAME_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45C92F4C669EBECD2FDA59F /* Pods_CSHDFIRSTGAME_iOS.framework */; };
-		A1B2C3D40000000000000003 /* CSHDFIRSTGAME Shared/CSHDFIRSTGAMEDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40000000000000001 /* CSHDFIRSTGAME Shared/CSHDFIRSTGAMEDataManager.m */; };
-		A1B2C3D40000000000000005 /* CSHDFIRSTGAME Shared/CSHDFIRSTGAMEAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40000000000000004 /* CSHDFIRSTGAME Shared/CSHDFIRSTGAMEAudioManager.m */; };
+		A1B2C3D40000000000000003 /* CSHDFIRSTGAMEDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40000000000000001 /* CSHDFIRSTGAMEDataManager.m */; };
+		A1B2C3D40000000000000005 /* CSHDFIRSTGAMEAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40000000000000004 /* CSHDFIRSTGAMEAudioManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		183712013044040800C6C4CE /* CSHDFIRSTGAME.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CSHDFIRSTGAME.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		627DE0E67951DFC51178D7E4 /* Pods-CSHDFIRSTGAME iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CSHDFIRSTGAME iOS.debug.xcconfig"; path = "Target Support Files/Pods-CSHDFIRSTGAME iOS/Pods-CSHDFIRSTGAME iOS.debug.xcconfig"; sourceTree = "<group>"; };
-		A1B2C3D40000000000000001 /* CSHDFIRSTGAME Shared/CSHDFIRSTGAMEDataManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "CSHDFIRSTGAME Shared/CSHDFIRSTGAMEDataManager.m"; sourceTree = "<group>"; };
-		A1B2C3D40000000000000004 /* CSHDFIRSTGAME Shared/CSHDFIRSTGAMEAudioManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "CSHDFIRSTGAME Shared/CSHDFIRSTGAMEAudioManager.m"; sourceTree = "<group>"; };
+		A1B2C3D40000000000000001 /* CSHDFIRSTGAMEDataManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "CSHDFIRSTGAME Shared/CSHDFIRSTGAMEDataManager.m"; sourceTree = "<group>"; };
+		A1B2C3D40000000000000004 /* CSHDFIRSTGAMEAudioManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "CSHDFIRSTGAME Shared/CSHDFIRSTGAMEAudioManager.m"; sourceTree = "<group>"; };
 		E2917D300290DF06C27E0099 /* Pods-CSHDFIRSTGAME iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CSHDFIRSTGAME iOS.release.xcconfig"; path = "Target Support Files/Pods-CSHDFIRSTGAME iOS/Pods-CSHDFIRSTGAME iOS.release.xcconfig"; sourceTree = "<group>"; };
 		E45C92F4C669EBECD2FDA59F /* Pods_CSHDFIRSTGAME_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CSHDFIRSTGAME_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -89,8 +89,8 @@
 		18264BF3307E02E200143B56 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				A1B2C3D40000000000000004 /* CSHDFIRSTGAME Shared/CSHDFIRSTGAMEAudioManager.m */,
-				A1B2C3D40000000000000001 /* CSHDFIRSTGAME Shared/CSHDFIRSTGAMEDataManager.m */,
+				A1B2C3D40000000000000004 /* CSHDFIRSTGAMEAudioManager.m */,
+				A1B2C3D40000000000000001 /* CSHDFIRSTGAMEDataManager.m */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -231,13 +231,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-CSHDFIRSTGAME iOS/Pods-CSHDFIRSTGAME iOS-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-CSHDFIRSTGAME iOS/Pods-CSHDFIRSTGAME iOS-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -251,8 +247,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A1B2C3D40000000000000005 /* CSHDFIRSTGAME Shared/CSHDFIRSTGAMEAudioManager.m in Sources */,
-				A1B2C3D40000000000000003 /* CSHDFIRSTGAME Shared/CSHDFIRSTGAMEDataManager.m in Sources */,
+				A1B2C3D40000000000000005 /* CSHDFIRSTGAMEAudioManager.m in Sources */,
+				A1B2C3D40000000000000003 /* CSHDFIRSTGAMEDataManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
