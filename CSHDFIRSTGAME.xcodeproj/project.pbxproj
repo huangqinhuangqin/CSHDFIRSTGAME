@@ -1,0 +1,480 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6EE951AEED3B87C639F4DDA3 /* Pods_CSHDFIRSTGAME_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45C92F4C669EBECD2FDA59F /* Pods_CSHDFIRSTGAME_iOS.framework */; };
+		A1B2C3D40000000000000003 /* CSHDFIRSTGAME Shared/CSHDFIRSTGAMEDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40000000000000001 /* CSHDFIRSTGAME Shared/CSHDFIRSTGAMEDataManager.m */; };
+		A1B2C3D40000000000000005 /* CSHDFIRSTGAME Shared/CSHDFIRSTGAMEAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D40000000000000004 /* CSHDFIRSTGAME Shared/CSHDFIRSTGAMEAudioManager.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		183712013044040800C6C4CE /* CSHDFIRSTGAME.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CSHDFIRSTGAME.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		627DE0E67951DFC51178D7E4 /* Pods-CSHDFIRSTGAME iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CSHDFIRSTGAME iOS.debug.xcconfig"; path = "Target Support Files/Pods-CSHDFIRSTGAME iOS/Pods-CSHDFIRSTGAME iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		A1B2C3D40000000000000001 /* CSHDFIRSTGAME Shared/CSHDFIRSTGAMEDataManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "CSHDFIRSTGAME Shared/CSHDFIRSTGAMEDataManager.m"; sourceTree = "<group>"; };
+		A1B2C3D40000000000000004 /* CSHDFIRSTGAME Shared/CSHDFIRSTGAMEAudioManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "CSHDFIRSTGAME Shared/CSHDFIRSTGAMEAudioManager.m"; sourceTree = "<group>"; };
+		E2917D300290DF06C27E0099 /* Pods-CSHDFIRSTGAME iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CSHDFIRSTGAME iOS.release.xcconfig"; path = "Target Support Files/Pods-CSHDFIRSTGAME iOS/Pods-CSHDFIRSTGAME iOS.release.xcconfig"; sourceTree = "<group>"; };
+		E45C92F4C669EBECD2FDA59F /* Pods_CSHDFIRSTGAME_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CSHDFIRSTGAME_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		183712173044040800C6C4CE /* Exceptions for "CSHDFIRSTGAME Shared" folder in "CSHDFIRSTGAME iOS" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Assets.xcassets,
+				CSHDFIRSTGAMEChoosePetScene.m,
+				CSHDFIRSTGAMEChoosePetScene.sks,
+				CSHDFIRSTGAMEFailScene.m,
+				CSHDFIRSTGAMEFailScene.sks,
+				CSHDFIRSTGAMEFuritCollectScene.m,
+				CSHDFIRSTGAMEFuritCollectScene.sks,
+				CSHDFIRSTGAMEGameScene.m,
+				CSHDFIRSTGAMEGameScene.sks,
+				CSHDFIRSTGAMEGradScene.m,
+				CSHDFIRSTGAMEGradScene.sks,
+				CSHDFIRSTGAMEHomeScene.m,
+				CSHDFIRSTGAMEHomeScene.sks,
+				CSHDFIRSTGAMESettingScene.m,
+				CSHDFIRSTGAMESettingScene.sks,
+				CSHDFIRSTGAMEVictoryScene.m,
+				CSHDFIRSTGAMEVictoryScene.sks,
+				CSHDFIRSTGAMEYY.wav,
+			);
+			target = 183712003044040800C6C4CE /* CSHDFIRSTGAME iOS */;
+		};
+		1837121B3044040800C6C4CE /* Exceptions for "CSHDFIRSTGAME iOS" folder in "CSHDFIRSTGAME iOS" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 183712003044040800C6C4CE /* CSHDFIRSTGAME iOS */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		183711F73044040700C6C4CE /* CSHDFIRSTGAME Shared */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				183712173044040800C6C4CE /* Exceptions for "CSHDFIRSTGAME Shared" folder in "CSHDFIRSTGAME iOS" target */,
+			);
+			path = "CSHDFIRSTGAME Shared";
+			sourceTree = "<group>";
+		};
+		183712033044040800C6C4CE /* CSHDFIRSTGAME iOS */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				1837121B3044040800C6C4CE /* Exceptions for "CSHDFIRSTGAME iOS" folder in "CSHDFIRSTGAME iOS" target */,
+			);
+			path = "CSHDFIRSTGAME iOS";
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		183711FE3044040800C6C4CE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6EE951AEED3B87C639F4DDA3 /* Pods_CSHDFIRSTGAME_iOS.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		18264BF3307E02E200143B56 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				A1B2C3D40000000000000004 /* CSHDFIRSTGAME Shared/CSHDFIRSTGAMEAudioManager.m */,
+				A1B2C3D40000000000000001 /* CSHDFIRSTGAME Shared/CSHDFIRSTGAMEDataManager.m */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		183711F23044040700C6C4CE = {
+			isa = PBXGroup;
+			children = (
+				183711F73044040700C6C4CE /* CSHDFIRSTGAME Shared */,
+				183712033044040800C6C4CE /* CSHDFIRSTGAME iOS */,
+				183712023044040800C6C4CE /* Products */,
+				18264BF3307E02E200143B56 /* Recovered References */,
+				DFF8CB940F539DBB0B008C0D /* Pods */,
+				2081638718C1CD444BC5891D /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		183712023044040800C6C4CE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				183712013044040800C6C4CE /* CSHDFIRSTGAME.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2081638718C1CD444BC5891D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E45C92F4C669EBECD2FDA59F /* Pods_CSHDFIRSTGAME_iOS.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DFF8CB940F539DBB0B008C0D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				627DE0E67951DFC51178D7E4 /* Pods-CSHDFIRSTGAME iOS.debug.xcconfig */,
+				E2917D300290DF06C27E0099 /* Pods-CSHDFIRSTGAME iOS.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		183712003044040800C6C4CE /* CSHDFIRSTGAME iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 183712183044040800C6C4CE /* Build configuration list for PBXNativeTarget "CSHDFIRSTGAME iOS" */;
+			buildPhases = (
+				19C1E0C8E9056FB7156729F1 /* [CP] Check Pods Manifest.lock */,
+				183711FD3044040800C6C4CE /* Sources */,
+				183711FE3044040800C6C4CE /* Frameworks */,
+				183711FF3044040800C6C4CE /* Resources */,
+				99FCA0980EFA60AD0F58D3A5 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				183712033044040800C6C4CE /* CSHDFIRSTGAME iOS */,
+			);
+			name = "CSHDFIRSTGAME iOS";
+			productName = "CSHDFIRSTGAME iOS";
+			productReference = 183712013044040800C6C4CE /* CSHDFIRSTGAME.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		183711F33044040700C6C4CE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 2660;
+				TargetAttributes = {
+					183712003044040800C6C4CE = {
+						CreatedOnToolsVersion = 26.6;
+					};
+				};
+			};
+			buildConfigurationList = 183711F63044040700C6C4CE /* Build configuration list for PBXProject "CSHDFIRSTGAME" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 183711F23044040700C6C4CE;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 183712023044040800C6C4CE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				183712003044040800C6C4CE /* CSHDFIRSTGAME iOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		183711FF3044040800C6C4CE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		19C1E0C8E9056FB7156729F1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CSHDFIRSTGAME iOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		99FCA0980EFA60AD0F58D3A5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CSHDFIRSTGAME iOS/Pods-CSHDFIRSTGAME iOS-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CSHDFIRSTGAME iOS/Pods-CSHDFIRSTGAME iOS-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CSHDFIRSTGAME iOS/Pods-CSHDFIRSTGAME iOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		183711FD3044040800C6C4CE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1B2C3D40000000000000005 /* CSHDFIRSTGAME Shared/CSHDFIRSTGAMEAudioManager.m in Sources */,
+				A1B2C3D40000000000000003 /* CSHDFIRSTGAME Shared/CSHDFIRSTGAMEDataManager.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		183712193044040800C6C4CE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 627DE0E67951DFC51178D7E4 /* Pods-CSHDFIRSTGAME iOS.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon 1";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 5966DQD858;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "CSHDFIRSTGAME iOS/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Pet Fruit Flip";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "Pet Fruit Flip use your device identifier to measure campaign performance and improve your game experience.";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.petfruit.ol;
+				PRODUCT_NAME = CSHDFIRSTGAME;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = PetFB;
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		1837121A3044040800C6C4CE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E2917D300290DF06C27E0099 /* Pods-CSHDFIRSTGAME iOS.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon 1";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 5966DQD858;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "CSHDFIRSTGAME iOS/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Pet Fruit Flip";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "Pet Fruit Flip use your device identifier to measure campaign performance and improve your game experience.";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.petfruit.ol;
+				PRODUCT_NAME = CSHDFIRSTGAME;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = PetFB;
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1837121C3044040800C6C4CE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+			};
+			name = Debug;
+		};
+		1837121D3044040800C6C4CE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		183711F63044040700C6C4CE /* Build configuration list for PBXProject "CSHDFIRSTGAME" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1837121C3044040800C6C4CE /* Debug */,
+				1837121D3044040800C6C4CE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		183712183044040800C6C4CE /* Build configuration list for PBXNativeTarget "CSHDFIRSTGAME iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				183712193044040800C6C4CE /* Debug */,
+				1837121A3044040800C6C4CE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 183711F33044040700C6C4CE /* Project object */;
+}

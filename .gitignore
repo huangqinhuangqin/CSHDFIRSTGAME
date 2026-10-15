@@ -1,0 +1,21 @@
+.DS_Store
+build/
+DerivedData/
+*.xcarchive
+*.ipa
+*.dSYM.zip
+xcuserdata/
+*.xcuserstate
+
+# CocoaPods is restored from Podfile.lock by GitHub Actions.
+Pods/
+
+# Never commit signing or App Store Connect credentials.
+*.p12
+*.p8
+*.cer
+*.mobileprovision
+*.key
+*.pem
+*-password.txt
+.env

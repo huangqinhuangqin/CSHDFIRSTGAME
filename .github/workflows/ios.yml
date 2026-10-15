@@ -1,0 +1,352 @@
+name: iOS - Build and upload IPA
+
+on:
+  workflow_dispatch:
+    inputs:
+      build_number:
+        description: "Build number; use a new, larger number for every Apple upload"
+        required: true
+        type: string
+      upload_to_app_store_connect:
+        description: "Upload the IPA to App Store Connect (does not submit for review)"
+        required: true
+        default: false
+        type: boolean
+
+# EDIT THIS BLOCK when adapting the workflow to another single-target iOS app.
+env:
+  APP_NAME: CSHDFIRSTGAME
+  PROJECT_DIR: .
+  XCODE_CONTAINER_TYPE: workspace
+  XCODE_CONTAINER: CSHDFIRSTGAME.xcworkspace
+  XCODE_SCHEME: CSHDFIRSTGAME
+  XCODE_CONFIGURATION: Release
+  BUNDLE_ID: com.petfruit.ol
+  TEAM_ID: 5966DQD858
+  PROFILE_NAME: PetFB
+  USE_COCOAPODS: "true"
+  COCOAPODS_VERSION: "1.17.0"
+  DEVELOPER_DIR: /Applications/Xcode_26.6.app/Contents/Developer
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ios-distribution-${{ github.repository }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: macos-26
+    timeout-minutes: 60
+    defaults:
+      run:
+        shell: bash
+    env:
+      BUILD_NUMBER: ${{ inputs.build_number }}
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Check configuration and required secrets
+        env:
+          BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+          P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
+          BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
+          APP_STORE_CONNECT_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
+          APP_STORE_CONNECT_KEY_IDENTIFIER: ${{ secrets.APP_STORE_CONNECT_KEY_IDENTIFIER }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          UPLOAD_REQUESTED: ${{ inputs.upload_to_app_store_connect }}
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os
+          import pathlib
+          import re
+
+          config_names = [
+              "APP_NAME", "PROJECT_DIR", "XCODE_CONTAINER_TYPE", "XCODE_CONTAINER",
+              "XCODE_SCHEME", "XCODE_CONFIGURATION", "BUNDLE_ID", "TEAM_ID",
+              "PROFILE_NAME", "USE_COCOAPODS", "DEVELOPER_DIR",
+          ]
+          missing_config = [name for name in config_names if not os.environ.get(name, "").strip()]
+          if missing_config:
+              raise SystemExit("Missing workflow configuration: " + ", ".join(missing_config))
+
+          required_secrets = ["BUILD_CERTIFICATE_BASE64", "P12_PASSWORD", "BUILD_PROVISION_PROFILE_BASE64"]
+          if os.environ["UPLOAD_REQUESTED"] == "true":
+              required_secrets += [
+                  "APP_STORE_CONNECT_PRIVATE_KEY",
+                  "APP_STORE_CONNECT_KEY_IDENTIFIER",
+                  "APP_STORE_CONNECT_ISSUER_ID",
+              ]
+          missing_secrets = [name for name in required_secrets if not os.environ.get(name, "").strip()]
+          if missing_secrets:
+              raise SystemExit("Missing repository secrets: " + ", ".join(missing_secrets))
+
+          if not re.fullmatch(r"[1-9][0-9]*", os.environ["BUILD_NUMBER"]):
+              raise SystemExit("Build number must be a positive integer.")
+          if os.environ["XCODE_CONTAINER_TYPE"] not in {"workspace", "project"}:
+              raise SystemExit("XCODE_CONTAINER_TYPE must be workspace or project.")
+          if os.environ["USE_COCOAPODS"] not in {"true", "false"}:
+              raise SystemExit("USE_COCOAPODS must be true or false.")
+
+          project_dir = pathlib.Path(os.environ["PROJECT_DIR"])
+          if project_dir.is_absolute() or ".." in project_dir.parts:
+              raise SystemExit("PROJECT_DIR must be a relative path inside the repository.")
+          container = project_dir / os.environ["XCODE_CONTAINER"]
+          if not container.exists():
+              raise SystemExit(f"Xcode container does not exist: {container}")
+          if os.environ["USE_COCOAPODS"] == "true":
+              if not os.environ.get("COCOAPODS_VERSION", "").strip():
+                  raise SystemExit("COCOAPODS_VERSION is required when USE_COCOAPODS is true.")
+              if not (project_dir / "Podfile").is_file():
+                  raise SystemExit(f"Podfile does not exist in PROJECT_DIR: {project_dir}")
+              if not (project_dir / "Podfile.lock").is_file():
+                  raise SystemExit(f"Podfile.lock does not exist in PROJECT_DIR: {project_dir}")
+          print("Configuration and required secrets are present. Secret contents were not printed.")
+          PY
+          test -d "$DEVELOPER_DIR"
+          xcodebuild -version
+          if [[ "$USE_COCOAPODS" == "true" ]]; then
+            pod "_${COCOAPODS_VERSION}_" --version
+          fi
+
+      - name: Install locked CocoaPods dependencies
+        if: ${{ env.USE_COCOAPODS == 'true' }}
+        run: |
+          set -euo pipefail
+          cd "$PROJECT_DIR"
+          pod "_${COCOAPODS_VERSION}_" install --deployment
+
+      - name: Import signing certificate and provisioning profile
+        env:
+          BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+          P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
+          BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
+        run: |
+          set -euo pipefail
+          umask 077
+          certificate_path="$RUNNER_TEMP/signing.p12"
+          profile_path="$RUNNER_TEMP/signing.mobileprovision"
+          keychain_path="$RUNNER_TEMP/app-signing.keychain-db"
+          printf '%s' "$BUILD_CERTIFICATE_BASE64" | base64 --decode > "$certificate_path"
+          printf '%s' "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode > "$profile_path"
+
+          keychain_password="$(openssl rand -hex 32)"
+          printf '::add-mask::%s\n' "$keychain_password"
+          security create-keychain -p "$keychain_password" "$keychain_path"
+          security set-keychain-settings -lut 21600 "$keychain_path"
+          security unlock-keychain -p "$keychain_password" "$keychain_path"
+          security import "$certificate_path" -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k "$keychain_path"
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -k "$keychain_password" "$keychain_path" >/dev/null
+          security list-keychains -d user -s "$keychain_path"
+          security find-identity -v -p codesigning "$keychain_path" > "$RUNNER_TEMP/signing-identities.txt"
+          security cms -D -i "$profile_path" > "$RUNNER_TEMP/profile.plist"
+
+          python3 - <<'PY'
+          import datetime
+          import hashlib
+          import os
+          import pathlib
+          import plistlib
+          import re
+          import shutil
+
+          temp = pathlib.Path(os.environ["RUNNER_TEMP"])
+          profile = plistlib.loads((temp / "profile.plist").read_bytes())
+          team = os.environ["TEAM_ID"]
+          bundle = os.environ["BUNDLE_ID"]
+          expected_profile_name = os.environ["PROFILE_NAME"]
+          entitlements = profile["Entitlements"]
+
+          if team not in profile["TeamIdentifier"]:
+              raise SystemExit("Provisioning profile does not match TEAM_ID.")
+          if entitlements.get("application-identifier") != f"{team}.{bundle}":
+              raise SystemExit("Provisioning profile does not match BUNDLE_ID.")
+          if profile["Name"] != expected_profile_name:
+              raise SystemExit(
+                  f"Provisioning profile name is {profile['Name']!r}, expected {expected_profile_name!r}."
+              )
+          if profile.get("ProvisionedDevices") or profile.get("ProvisionsAllDevices") or entitlements.get("get-task-allow"):
+              raise SystemExit("An App Store distribution profile is required.")
+          expires = profile["ExpirationDate"].replace(tzinfo=datetime.timezone.utc)
+          if expires <= datetime.datetime.now(datetime.timezone.utc):
+              raise SystemExit("Provisioning profile has expired.")
+
+          identity_text = (temp / "signing-identities.txt").read_text()
+          identities = re.findall(r"\b([0-9A-F]{40})\b", identity_text)
+          profile_hashes = {
+              hashlib.sha1(certificate).hexdigest().upper()
+              for certificate in profile["DeveloperCertificates"]
+          }
+          matches = [identity for identity in identities if identity in profile_hashes]
+          if not matches:
+              raise SystemExit("No valid signing identity from the P12 matches the provisioning profile.")
+
+          profile_uuid = profile["UUID"]
+          if not re.fullmatch(r"[0-9A-Fa-f-]{36}", profile_uuid):
+              raise SystemExit("Invalid provisioning profile UUID.")
+          for relative in [
+              "Library/MobileDevice/Provisioning Profiles",
+              "Library/Developer/Xcode/UserData/Provisioning Profiles",
+          ]:
+              directory = pathlib.Path.home() / relative
+              directory.mkdir(parents=True, exist_ok=True)
+              shutil.copy2(temp / "signing.mobileprovision", directory / f"{profile_uuid}.mobileprovision")
+
+          export_options = {
+              "method": "app-store-connect",
+              "destination": "export",
+              "teamID": team,
+              "signingStyle": "manual",
+              "signingCertificate": matches[0],
+              "provisioningProfiles": {bundle: profile_uuid},
+              "manageAppVersionAndBuildNumber": False,
+          }
+          (temp / "ExportOptions.plist").write_bytes(plistlib.dumps(export_options))
+          with open(os.environ["GITHUB_ENV"], "a") as output:
+              output.write(f"PROFILE_UUID={profile_uuid}\n")
+          print("Signing certificate and App Store provisioning profile match.")
+          PY
+
+      - name: Verify Xcode project settings
+        run: |
+          set -euo pipefail
+          container_path="$PROJECT_DIR/$XCODE_CONTAINER"
+          if [[ "$XCODE_CONTAINER_TYPE" == "workspace" ]]; then
+            container_args=(-workspace "$container_path")
+          else
+            container_args=(-project "$container_path")
+          fi
+          xcodebuild -showBuildSettings \
+            "${container_args[@]}" \
+            -scheme "$XCODE_SCHEME" \
+            -configuration "$XCODE_CONFIGURATION" \
+            -destination 'generic/platform=iOS' \
+            -json > "$RUNNER_TEMP/build-settings.json"
+          python3 - <<'PY'
+          import json
+          import os
+          import pathlib
+
+          settings = json.loads((pathlib.Path(os.environ["RUNNER_TEMP"]) / "build-settings.json").read_text())
+          app_targets = [
+              entry for entry in settings
+              if entry.get("buildSettings", {}).get("PRODUCT_TYPE") == "com.apple.product-type.application"
+          ]
+          matching = [
+              entry for entry in app_targets
+              if entry["buildSettings"].get("PRODUCT_BUNDLE_IDENTIFIER") == os.environ["BUNDLE_ID"]
+          ]
+          if len(matching) != 1:
+              found = [entry.get("buildSettings", {}).get("PRODUCT_BUNDLE_IDENTIFIER") for entry in app_targets]
+              raise SystemExit(f"Expected one app target with BUNDLE_ID={os.environ['BUNDLE_ID']}; found {found}.")
+
+          build = matching[0]["buildSettings"]
+          checks = {
+              "DEVELOPMENT_TEAM": os.environ["TEAM_ID"],
+              "PROVISIONING_PROFILE_SPECIFIER": os.environ["PROFILE_NAME"],
+              "CODE_SIGN_STYLE": "Manual",
+          }
+          mismatches = [
+              f"{key}={build.get(key)!r}, expected {expected!r}"
+              for key, expected in checks.items()
+              if build.get(key) != expected
+          ]
+          if mismatches:
+              raise SystemExit("Xcode signing settings do not match workflow configuration: " + "; ".join(mismatches))
+          print("Xcode project, Bundle ID, team, profile, and scheme match the workflow configuration.")
+          PY
+
+      - name: Archive app
+        run: |
+          set -euo pipefail
+          mkdir -p build/logs
+          container_path="$PROJECT_DIR/$XCODE_CONTAINER"
+          archive_path="$GITHUB_WORKSPACE/build/${APP_NAME}.xcarchive"
+          if [[ "$XCODE_CONTAINER_TYPE" == "workspace" ]]; then
+            container_args=(-workspace "$container_path")
+          else
+            container_args=(-project "$container_path")
+          fi
+          xcodebuild archive \
+            "${container_args[@]}" \
+            -scheme "$XCODE_SCHEME" \
+            -configuration "$XCODE_CONFIGURATION" \
+            -destination 'generic/platform=iOS' \
+            -archivePath "$archive_path" \
+            CURRENT_PROJECT_VERSION="$BUILD_NUMBER" \
+            COMPILER_INDEX_STORE_ENABLE=NO \
+            OTHER_CODE_SIGN_FLAGS="--keychain $RUNNER_TEMP/app-signing.keychain-db" \
+            2>&1 | tee build/logs/archive.log
+
+      - name: Export signed IPA
+        run: |
+          set -euo pipefail
+          xcodebuild -exportArchive \
+            -archivePath "$GITHUB_WORKSPACE/build/${APP_NAME}.xcarchive" \
+            -exportPath "$GITHUB_WORKSPACE/build/ipa" \
+            -exportOptionsPlist "$RUNNER_TEMP/ExportOptions.plist" \
+            2>&1 | tee build/logs/export.log
+
+      - name: Save IPA for download
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: ${{ env.APP_NAME }}-IPA-${{ inputs.build_number }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: build/ipa/*.ipa
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Upload to App Store Connect
+        if: ${{ inputs.upload_to_app_store_connect }}
+        env:
+          APP_STORE_CONNECT_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
+          APP_STORE_CONNECT_KEY_IDENTIFIER: ${{ secrets.APP_STORE_CONNECT_KEY_IDENTIFIER }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+        run: |
+          set -euo pipefail
+          umask 077
+          [[ "$APP_STORE_CONNECT_KEY_IDENTIFIER" =~ ^[A-Za-z0-9]+$ ]] || { echo 'Invalid API Key ID.'; exit 1; }
+          export API_PRIVATE_KEYS_DIR="$RUNNER_TEMP/appstore-private-keys"
+          mkdir -p "$API_PRIVATE_KEYS_DIR"
+          key_path="$API_PRIVATE_KEYS_DIR/AuthKey_${APP_STORE_CONNECT_KEY_IDENTIFIER}.p8"
+          printf '%s' "$APP_STORE_CONNECT_PRIVATE_KEY" > "$key_path"
+          openssl pkey -in "$key_path" -noout
+          shopt -s nullglob
+          ipa_files=(build/ipa/*.ipa)
+          [[ ${#ipa_files[@]} -eq 1 ]] || { echo 'Expected exactly one IPA.'; exit 1; }
+          xcrun altool --upload-package "${ipa_files[0]}" \
+            --api-key "$APP_STORE_CONNECT_KEY_IDENTIFIER" \
+            --api-issuer "$APP_STORE_CONNECT_ISSUER_ID" \
+            2>&1 | tee build/logs/upload.log
+
+      - name: Save build logs
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: ${{ env.APP_NAME }}-logs-${{ github.run_id }}-${{ github.run_attempt }}
+          path: build/logs/*.log
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Clean up temporary signing material
+        if: ${{ always() }}
+        run: |
+          if [[ -f "$RUNNER_TEMP/app-signing.keychain-db" ]]; then
+            security delete-keychain "$RUNNER_TEMP/app-signing.keychain-db" || true
+          fi
+          if [[ -n "${PROFILE_UUID:-}" ]]; then
+            rm -f "$HOME/Library/MobileDevice/Provisioning Profiles/$PROFILE_UUID.mobileprovision"
+            rm -f "$HOME/Library/Developer/Xcode/UserData/Provisioning Profiles/$PROFILE_UUID.mobileprovision"
+          fi
+          rm -f "$RUNNER_TEMP/signing.p12"
+          rm -f "$RUNNER_TEMP/signing.mobileprovision"
+          rm -f "$RUNNER_TEMP/profile.plist"
+          rm -f "$RUNNER_TEMP/signing-identities.txt"
+          rm -f "$RUNNER_TEMP/ExportOptions.plist"
+          rm -f "$RUNNER_TEMP/build-settings.json"
+          rm -rf "$RUNNER_TEMP/appstore-private-keys"
